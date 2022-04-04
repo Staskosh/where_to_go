@@ -22,4 +22,18 @@ class Coordinates(models.Model):
         return f'{self.title.title}'
 
 
+class Image(models.Model):
+    number = models.IntegerField('Номер фото')
+    title = models.ForeignKey(
+        Place,
+        on_delete=models.CASCADE,
+        verbose_name='Координаты',
+    )
+    img = models.ImageField('Фото')
+
+    def __str__(self):
+        return f'{self.number} {self.title.title}'
+
+
+
 # Create your models here.
