@@ -1,10 +1,33 @@
 import json
 
-from django.shortcuts import render
+from django.conf import settings
+from django.core import serializers
+from django.http import HttpResponse, JsonResponse
+from django.shortcuts import render, get_object_or_404
 from django.template.response import TemplateResponse
 
 from places.models import Place
 
+
+def place_detail_view(request, place_id):
+    place = get_object_or_404(Place, id=place_id)
+    response = HttpResponse(place.title)
+
+    images = ["{0}{1}".format(settings.MEDIA_URL, image.img) for image in place.image.all()]
+    coordinates = place.coordinates.first()
+    print([image.img.file for image in place.image.all()])
+    json_response = JsonResponse({
+        'title': place.title,
+        'imgs': images,
+        'description_short': place.description_short,
+        'description_long': place.description_long,
+        'coordinates': {
+            'lng': coordinates.lng,
+            'lat': coordinates.lat
+        }
+    }, json_dumps_params={'indent': 2, 'ensure_ascii': False})
+
+    return json_response
 
 def show_places(request):
     places = Place.objects.all()
@@ -31,7 +54,6 @@ def show_places(request):
             }
         })
     places_geo['features'] = places_feature
-    print(places_geo)
 
     context = {
         'places_json': places_geo

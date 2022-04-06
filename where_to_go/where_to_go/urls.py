@@ -9,5 +9,6 @@ from places import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.show_places, name='show_places'),
+    path('places/<int:place_id>/', views.place_detail_view, name='place_detail_view')
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
