@@ -25,14 +25,14 @@ class Coordinates(models.Model):
 
 
 class Image(models.Model):
-    number = models.IntegerField('Номер фото')
+    number = models.IntegerField('Позиция')
     title = models.ForeignKey(
         Place,
         on_delete=models.CASCADE,
         related_name='image',
         verbose_name='Координаты',
     )
-    img = models.ImageField('Фото')
+    img = models.ImageField('Картинка')
 
     def __str__(self):
         return f'{self.number} {self.title.title}'
