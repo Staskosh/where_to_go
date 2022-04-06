@@ -8,6 +8,6 @@ from places import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.show_who_is_online, name='show_who_is_online'),
+    path('', views.show_places, name='show_places'),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
