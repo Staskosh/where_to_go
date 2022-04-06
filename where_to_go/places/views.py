@@ -5,17 +5,16 @@ from django.core import serializers
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.template.response import TemplateResponse
+from django.urls import reverse
 
 from places.models import Place
 
 
 def place_detail_view(request, place_id):
     place = get_object_or_404(Place, id=place_id)
-    response = HttpResponse(place.title)
-
     images = ["{0}{1}".format(settings.MEDIA_URL, image.img) for image in place.image.all()]
     coordinates = place.coordinates.first()
-    print([image.img.file for image in place.image.all()])
+    print(place.title)
     json_response = JsonResponse({
         'title': place.title,
         'imgs': images,
@@ -38,7 +37,6 @@ def show_places(request):
     places_feature = []
     for place in places:
         title = place.title
-        print(title)
         placeid = place.placeid
         coordinates = place.coordinates.first()
         places_feature.append({
@@ -50,7 +48,7 @@ def show_places(request):
             "properties": {
                 "title": title,
                 "placeId": placeid,
-                "detailsUrl": f'./static/places/{placeid}.json'
+                "detailsUrl": reverse('place_detail_view', args=[place.id])
             }
         })
     places_geo['features'] = places_feature
