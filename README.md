@@ -43,14 +43,14 @@ python3 manage.py createsuperuser
 
 ## Наполнение сайта
 Для заполнения сайта данными перейдите в [админ панель](127.0.0.1:8000/admin), введите имя и пароль суперпользователя.
-Вы увидите ![стартовую страницу](.gitbook/assets/django-admin.png)
+Вы увидите ![стартовую страницу](/where_to_go/static/img/.gitbook/assets/django-admin.png)
 В правом верхнем углу ADD PlACE -> Заполните необходимые поля -> нажмите кнопку SAVE в правом нижнем углу.
 
 ## Настройки
 
 Внизу справа на странице можно включить отладочный режим логгирования.
 
-![debug mode](.gitbook/assets/debug-option.png)
+![debug mode](/where_to_go/static/img/.gitbook/assets/debug-option.png)
 
 Настройки сохраняются в Local Storage браузера и не пропадают после обновления страницы. Чтобы сбросить настройки удалите ключи из Local Storage с помощью Chrome Dev Tools —&gt; Вкладка Application —&gt; Local Storage.
 
