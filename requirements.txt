@@ -1,4 +1,4 @@
-django==4.0.3
+django==3.2.13
 Pillow==9.1.0
 environs==9.5.0
 django-admin-sortable2==1.0.4
