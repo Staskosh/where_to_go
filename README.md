@@ -2,7 +2,7 @@
 
 Сайт о самых интересных местах в Москве.
 
-[Демка сайта](https://devmanorg.github.io/where-to-go-frontend/).
+[Демка сайта](https://stkosh.pythonanywhere.com/).
 
 ## Запуск
 
