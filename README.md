@@ -48,7 +48,7 @@ python3 manage.py createsuperuser
 ```
 python3 manage.py load_place http://адрес/файла.json
 ```
-и загружать данные о местах в бд через терминал.
+и загружать данные о местах на сайт через терминал.
 Примеры файлов можно найти по [ссылке](https://github.com/devmanorg/where-to-go-places)
 
 ## Настройки
