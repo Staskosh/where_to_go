@@ -3,6 +3,7 @@ from django.conf import settings
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
+from django.utils.safestring import mark_safe
 
 from places.models import Place
 
@@ -32,8 +33,6 @@ def show_places(request):
     }
     places_feature = []
     for place in places:
-        title = place.title
-        placeid = place.placeid
         places_feature.append({
             "type": "Feature",
             "geometry": {
@@ -41,8 +40,8 @@ def show_places(request):
                 "coordinates": [place.lng, place.lat]
             },
             "properties": {
-                "title": title,
-                "placeId": placeid,
+                "title": place.title,
+                "placeId": place.placeid,
                 "detailsUrl": reverse('place_detail_view', args=[place.id])
             }
         })
