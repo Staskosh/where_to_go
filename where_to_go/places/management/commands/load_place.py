@@ -1,4 +1,6 @@
 from io import BytesIO
+from os.path import split, splitext
+from urllib.parse import urlsplit, unquote
 
 import requests
 from django.core.files import File
@@ -32,7 +34,8 @@ class Command(BaseCommand):
         all_images = place[0].image.count()
         image_links = raw_place['imgs']
         for image_link in image_links:
-            image_name = image_link.split('/')[-1]
+            _, raw_image_name = split(urlsplit(image_link).path)
+            image_name = unquote(raw_image_name)
             response = requests.get(image_link)
             response.raise_for_status()
             buf = BytesIO()
