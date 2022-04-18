@@ -29,4 +29,3 @@ class Image(models.Model):
 
     def __str__(self):
         return f'{self.number} {self.title.title}'
-# Create your models here.

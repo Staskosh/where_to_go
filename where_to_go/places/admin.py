@@ -21,4 +21,3 @@ class PlaceAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Place, PlaceAdmin)
-# Register your models here.
