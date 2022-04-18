@@ -21,7 +21,7 @@ class Command(BaseCommand):
             response.raise_for_status()
             return response.json()
 
-        place_info = download_file(options['place_url'][0])
+        raw_place = download_file(options['place_url'][0])
 
         def upload_place_to_db(place_info):
             place = Place.objects.get_or_create(
@@ -49,4 +49,4 @@ class Command(BaseCommand):
                 )
                 image[0].save()
 
-        upload_place_to_db(place_info)
+        upload_place_to_db(raw_place)
