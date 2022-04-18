@@ -16,35 +16,29 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
-        def download_file(place_url):
-            response = requests.get(place_url)
+        response = requests.get(options['place_url'][0])
+        response.raise_for_status()
+        raw_place = response.json()
+
+        place = Place.objects.get_or_create(
+            title=raw_place['title'],
+            description_short=raw_place['description_short'],
+            description_long=raw_place['description_long'],
+            placeid=translit(raw_place['title'], reversed=True),
+            lng=float(raw_place['coordinates']['lng']),
+            lat=float(raw_place['coordinates']['lat'])
+        )
+
+        all_images = place[0].image.count()
+        image_links = raw_place['imgs']
+        for image_link in image_links:
+            image_name = image_link.split('/')[-1]
+            response = requests.get(image_link)
             response.raise_for_status()
-            return response.json()
-
-        raw_place = download_file(options['place_url'][0])
-
-        def upload_place_to_db(raw_place):
-            place = Place.objects.get_or_create(
-                title=raw_place['title'],
-                description_short=raw_place['description_short'],
-                description_long=raw_place['description_long'],
-                placeid=translit(raw_place['title'], reversed=True),
-                lng=float(raw_place['coordinates']['lng']),
-                lat=float(raw_place['coordinates']['lat'])
+            buf = BytesIO()
+            buf.write(response.content)
+            Image.objects.get_or_create(
+                number=all_images+1,
+                title=place[0],
+                img=File(buf, image_name)
             )
-
-            all_images = place[0].image.count()
-            image_links = raw_place['imgs']
-            for image_link in image_links:
-                image_name = image_link.split('/')[-1]
-                response = requests.get(image_link)
-                response.raise_for_status()
-                buf = BytesIO()
-                buf.write(response.content)
-                Image.objects.get_or_create(
-                    number=all_images+1,
-                    title=place[0],
-                    img=File(buf, image_name)
-                )
-
-        upload_place_to_db(raw_place)
