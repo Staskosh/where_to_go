@@ -1,3 +1,5 @@
+from urllib.parse import urljoin
+
 from django.conf import settings
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render
@@ -7,7 +9,7 @@ from places.models import Place
 
 def place_detail_view(request, place_id):
     place = get_object_or_404(Place, id=place_id)
-    images = ["{0}{1}".format(settings.MEDIA_URL, image.img) for image in place.image.all()]
+    images = [urljoin(settings.MEDIA_URL, image.img.url) for image in place.image.all()]
     json_response = JsonResponse({
         'title': place.title,
         'imgs': images,
