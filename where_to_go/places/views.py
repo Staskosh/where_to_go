@@ -28,7 +28,6 @@ def show_places(request):
     places = Place.objects.all()
     places_geo = {
         "type": "FeatureCollection",
-        "features": '',
     }
     places_feature = []
     for place in places:
