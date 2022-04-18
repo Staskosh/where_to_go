@@ -14,11 +14,9 @@ class ImageInline(SortableInlineAdminMixin, admin.TabularInline):
         return format_html(mark_safe('<img src="{}" height=200 />'), instance.img.url)
 
 
+@admin.register(Place)
 class PlaceAdmin(admin.ModelAdmin):
     inlines = [
         ImageInline,
     ]
     search_fields = ['title', ]
-
-
-admin.site.register(Place, PlaceAdmin)
