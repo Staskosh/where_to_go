@@ -39,7 +39,6 @@ def show_places(request):
             },
             "properties": {
                 "title": place.title,
-                "placeId": place.placeid,
                 "detailsUrl": reverse('place_detail_view', args=[place.id])
             }
         })
