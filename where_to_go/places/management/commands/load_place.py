@@ -20,19 +20,18 @@ class Command(BaseCommand):
         response.raise_for_status()
         raw_place = response.json()
 
-        place,_ = Place.objects.get_or_create(
+        place, _ = Place.objects.get_or_create(
             title=raw_place['title'],
             defaults={
-            'description_short': raw_place['description_short'],
-            'description_long': raw_place['description_long'],
-            'lng': float(raw_place['coordinates']['lng']),
-            'lat': float(raw_place['coordinates']['lat'])
+                'description_short': raw_place['description_short'],
+                'description_long': raw_place['description_long'],
+                'lng': float(raw_place['coordinates']['lng']),
+                'lat': float(raw_place['coordinates']['lat'])
             }
         )
+        all_images = place.image.count()
         image_links = raw_place['imgs']
-        for image_link in image_links:
-            all_images = place.image.count()
-            print(all_images)
+        for image_number, image_link in enumerate(image_links, start=all_images+1):
             _, raw_image_name = split(urlsplit(image_link).path)
             image_name = unquote(raw_image_name)
             response = requests.get(image_link)
@@ -40,7 +39,7 @@ class Command(BaseCommand):
             buf = BytesIO()
             buf.write(response.content)
             Image.objects.get_or_create(
-                number=all_images+1,
+                number=image_number,
                 title=place,
                 img=File(buf, image_name)
             )
