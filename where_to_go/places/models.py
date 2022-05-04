@@ -15,7 +15,7 @@ class Place(models.Model):
 
 class Image(models.Model):
     number = models.IntegerField('Позиция', default=0)
-    title = models.ForeignKey(
+    place = models.ForeignKey(
         Place,
         on_delete=models.CASCADE,
         related_name='image',
@@ -27,4 +27,4 @@ class Image(models.Model):
         ordering = ['number']
 
     def __str__(self):
-        return f'{self.number} {self.title.title}'
+        return f'{self.number} {self.place.title}'

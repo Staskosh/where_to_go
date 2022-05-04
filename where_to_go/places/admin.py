@@ -7,7 +7,7 @@ from places.models import Image, Place
 
 class ImageInline(SortableInlineAdminMixin, admin.TabularInline):
     model = Image
-    fields = ['title', 'img', 'get_preview', 'number']
+    fields = ['place', 'img', 'get_preview', 'number']
     readonly_fields = ('get_preview',)
 
     def get_preview(self, instance):
