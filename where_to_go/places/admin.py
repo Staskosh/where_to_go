@@ -11,7 +11,7 @@ class ImageInline(SortableInlineAdminMixin, admin.TabularInline):
     readonly_fields = ('get_preview',)
 
     def get_preview(self, instance):
-        return format_html(mark_safe('<img src="{}" height=200 />'), instance.img.url)
+        return format_html('<img src="{}" height=200 />', instance.img.url)
 
 
 @admin.register(Place)
